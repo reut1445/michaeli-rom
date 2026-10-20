@@ -283,3 +283,13 @@ html[lang=en] .mr-site .mr-form input[type=tel]:placeholder-shown{direction:ltr}
 @media(max-width:767px){.mr-site .mr-team-grid{gap:32px;max-width:480px}.mr-site .mr-portrait{width:160px}.mr-site .mr-person-copy,.mr-site .mr-amnon .mr-person-copy{padding:20px 0 0}.mr-site .mr-person .mr-body{font-size:18px}}
 .mr-site .mr-locations-content>div,.mr-site .mr-contact-page>div{min-width:0;max-width:100%}
 @media(max-width:767px){.mr-site .mr-locations-content>div,.mr-site .mr-contact-page>div{width:100%}.mr-site .mr-locations-content .mr-button{max-width:100%}}
+/* Intermediate widths have their own composition, rather than squeezed desktop columns. */
+html[lang=en] .mr-site .mr-editorial-row .mr-script{font-size:clamp(24px,2.4vw,36px);line-height:1.3}
+@media(min-width:768px) and (max-width:1100px){
+ .mr-site .mr-blog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+ .mr-site .mr-blog-grid>.mr-blog-card:last-child:nth-child(odd){grid-column:1/-1;width:calc(50% - 12px);justify-self:center}
+ .mr-site .mr-editorial-row,.mr-site .mr-editorial-row:nth-child(even){grid-template-columns:160px minmax(0,1fr);gap:32px}
+ .mr-site .mr-row-emblem{width:150px;height:150px;min-height:150px}
+ .mr-site .mr-editorial-row:nth-child(even) .mr-row-emblem{order:0}
+ html[lang=en] .mr-site .mr-editorial-row{grid-template-columns:1fr;text-align:center}
+}
