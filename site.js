@@ -30,17 +30,48 @@
   const menu = site.querySelector('.mr-header-nav'), toggle = site.querySelector('.mr-menu-toggle');
   if (menu && toggle) {
     menu.id = 'mr-mobile-menu';
-    const close = (restore = false) => {menu.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label',copy.open); if(restore)toggle.focus();};
-    toggle.addEventListener('click', () => {
-      const opening = toggle.getAttribute('aria-expanded') !== 'true';
-      menu.classList.toggle('is-open',opening); toggle.setAttribute('aria-expanded',String(opening)); toggle.setAttribute('aria-label',opening?copy.close:copy.open);
-      if(opening && window.gsap && !userPaused && !reduced.matches) gsap.fromTo(menu.children,{opacity:0,y:6},{opacity:1,y:0,stagger:.035,duration:.3,clearProps:'opacity,transform'});
+    const mobile = matchMedia('(max-width:1100px)');
+    let opened = false;
+    const background = [...site.children].filter(el => el !== stickyHeader);
+    const previousInert = new Map();
+    const setMenu = (opening, restore = false) => {
+      opened = opening && mobile.matches;
+      menu.classList.toggle('is-open', opened);
+      stickyHeader.classList.toggle('menu-open', opened);
+      document.documentElement.classList.toggle('mr-menu-open', opened);
+      toggle.setAttribute('aria-expanded', String(opened));
+      toggle.setAttribute('aria-label', opened ? copy.close : copy.open);
+      menu.inert = mobile.matches && !opened;
+      if (opened) {
+        lenis?.stop();
+        background.forEach(el => {previousInert.set(el, el.inert); el.inert = true;});
+      } else {
+        lenis?.start();
+        previousInert.forEach((value, el) => {el.inert = value;});
+        previousInert.clear();
+      }
+      if (restore) toggle.focus();
+    };
+    [...menu.children].forEach((item, index) => {
+      item.style.setProperty('--menu-index', index);
+      item.setAttribute('data-number', String(index + 1).padStart(2, '0'));
     });
-    menu.addEventListener('click',e=>{if(e.target.closest('a'))close();});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape' && menu.classList.contains('is-open'))close(true);});
-    document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!toggle.contains(e.target))close();});
-    matchMedia('(min-width:1101px)').addEventListener('change',()=>close());
+    toggle.addEventListener('click', () => setMenu(!opened));
+    menu.addEventListener('click', e => {if(e.target.closest('a'))setMenu(false);});
+    document.addEventListener('keydown', e => {
+      if (!opened) return;
+      if (e.key === 'Escape') {e.preventDefault(); setMenu(false, true);}
+      if (e.key === 'Tab') {
+        const focusable = [...stickyHeader.querySelectorAll('a, button')].filter(el => !el.inert && el.getClientRects().length);
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {e.preventDefault(); last.focus();}
+        else if (!e.shiftKey && document.activeElement === last) {e.preventDefault(); first.focus();}
+      }
+    });
+    mobile.addEventListener('change', () => setMenu(false));
+    setMenu(false);
   }
+
   const dialog=document.querySelector('.mr-dialog');
   document.querySelectorAll('[data-social]').forEach(button=>button.addEventListener('click',()=>{
     if(!dialog)return;
