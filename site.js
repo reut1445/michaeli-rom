@@ -170,6 +170,7 @@
       });
       gsap.utils.toArray('.mr-about-photo,.mr-portrait,.mr-locations-photo,.mr-calendar-example').forEach(el=>gsap.from(el,{y:24,opacity:0,scale:.975,duration:1.15,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 94%',once:true}}));
       gsap.utils.toArray('.mr-olive,.mr-intro-olive,.mr-footer-branch').forEach(el=>gsap.fromTo(el,{clipPath:'inset(0 50% 0 50%)'},{clipPath:'inset(0 0% 0 0%)',ease:'none',scrollTrigger:{trigger:el,start:'top 95%',end:'top 65%',scrub:.45}}));
+      gsap.utils.toArray('.mr-person-copy').forEach(el=>gsap.fromTo(el,{'--bio-line':0},{'--bio-line':1,ease:'none',scrollTrigger:{trigger:el,start:'top 94%',end:'top 65%',scrub:.45}}));
       gsap.utils.toArray('.mr-about-divider').forEach(el=>gsap.fromTo(el,{'--line-scale':0},{'--line-scale':1,ease:'none',scrollTrigger:{trigger:el,start:'top 92%',end:'top 55%',scrub:.45}}));
       gsap.utils.toArray('.mr-quote-text').forEach(el=>{
         const chars=buildTyping(el,restoreHeadings);
