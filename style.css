@@ -281,3 +281,5 @@ html[lang=en] .mr-site .mr-form input[type=tel]:placeholder-shown{direction:ltr}
 .mr-site .mr-team-leaf{width:150px;top:60px;opacity:.5}
 .mr-site .mr-team>.mr-button{margin-top:8px}
 @media(max-width:767px){.mr-site .mr-team-grid{gap:32px;max-width:480px}.mr-site .mr-portrait{width:160px}.mr-site .mr-person-copy,.mr-site .mr-amnon .mr-person-copy{padding:20px 0 0}.mr-site .mr-person .mr-body{font-size:18px}}
+.mr-site .mr-locations-content>div,.mr-site .mr-contact-page>div{min-width:0;max-width:100%}
+@media(max-width:767px){.mr-site .mr-locations-content>div,.mr-site .mr-contact-page>div{width:100%}.mr-site .mr-locations-content .mr-button{max-width:100%}}
