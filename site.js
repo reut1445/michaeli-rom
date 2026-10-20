@@ -87,6 +87,15 @@
     try{history.pushState(null,'',hash);}catch{}
     lenis.scrollTo(target,{offset:-(document.querySelector('.mr-header')?.offsetHeight||70)-20,onComplete:()=>{const old=target.getAttribute('tabindex');target.setAttribute('tabindex','-1');target.focus({preventScroll:true});target.addEventListener('blur',()=>{if(old===null)target.removeAttribute('tabindex');else target.setAttribute('tabindex',old);},{once:true});}});
   });
+  const fitButtons=()=>site.querySelectorAll('.mr-button a,.mr-cta a,.mr-form button').forEach(label=>{
+    label.querySelectorAll('br').forEach(br=>br.replaceWith(document.createTextNode(' ')));
+    label.style.removeProperty('font-size');
+    const available=label.clientWidth-parseFloat(getComputedStyle(label).paddingLeft)-parseFloat(getComputedStyle(label).paddingRight);
+    const range=document.createRange();range.selectNodeContents(label);
+    const width=range.getBoundingClientRect?.().width||0;
+    if(width>available&&available>0)label.style.fontSize=(parseFloat(getComputedStyle(label).fontSize)*available/width)+'px';
+  });
+  document.fonts?.ready.then(fitButtons);window.addEventListener('resize',fitButtons);
   function buildTyping(heading,restores){
     const original=heading.innerHTML,oldLabel=heading.getAttribute('aria-label');
     const words=heading.textContent;heading.setAttribute('aria-label',words);
@@ -120,7 +129,7 @@
         gsap.fromTo(chars,{opacity:0},{opacity:1,duration:.025,stagger:Math.min(.04,1.5/chars.length),ease:'none',delay:hero ? 0.2 : 0,
           scrollTrigger:{trigger:heading,start:'top 92%',once:true}});
       });
-      const elements=gsap.utils.toArray('.mr-about-photo,.mr-about-copy .mr-body,.mr-quote-text,.mr-person,.mr-narrative>.mr-body,.mr-form-widget,.mr-editorial-row,.mr-solution,.mr-faq-item,.mr-locations-content,.mr-article-body>.mr-body,.mr-article-body>ul,.mr-table-scroll,.mr-calendar-example');
+      const elements=gsap.utils.toArray('main .mr-body,.mr-article-body>ul,.mr-form-widget,.mr-table-scroll');
       elements.forEach(el=>gsap.from(el,{y:22,opacity:0,duration:.85,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 96%',once:true}}));
       // A single restrained card turn on entry; reading remains static afterwards.
       gsap.utils.toArray('.mr-value,.mr-blog-card,.mr-step-card').forEach((card,index)=>{
@@ -128,14 +137,21 @@
           {rotationY:0,rotationX:0,opacity:1,duration:1.1,ease:'power2.out',delay:(index%3)*.07,
            scrollTrigger:{trigger:card,start:'top 95%',once:true}});
       });
-      gsap.utils.toArray('.mr-olive,.mr-intro-olive').forEach(el=>gsap.from(el,{y:12,rotation:-4,opacity:0,duration:1.3,ease:'sine.out',scrollTrigger:{trigger:el,start:'top 97%',once:true}}));
+      gsap.utils.toArray('.mr-about-photo,.mr-portrait,.mr-locations-photo,.mr-calendar-example').forEach(el=>gsap.from(el,{y:24,opacity:0,scale:.975,duration:1.15,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 94%',once:true}}));
+      gsap.utils.toArray('.mr-olive,.mr-intro-olive,.mr-footer-branch').forEach(el=>gsap.fromTo(el,{clipPath:'inset(0 50% 0 50%)'},{clipPath:'inset(0 0% 0 0%)',ease:'none',scrollTrigger:{trigger:el,start:'top 95%',end:'top 65%',scrub:.45}}));
+      gsap.utils.toArray('.mr-about-divider').forEach(el=>gsap.fromTo(el,{'--line-scale':0},{'--line-scale':1,ease:'none',scrollTrigger:{trigger:el,start:'top 92%',end:'top 55%',scrub:.45}}));
+      gsap.utils.toArray('.mr-quote-text').forEach(el=>{
+        const chars=buildTyping(el,restoreHeadings);
+        gsap.fromTo(chars,{opacity:.18},{opacity:1,duration:1,stagger:.035,ease:'none',scrollTrigger:{trigger:el,start:'top 85%',end:'bottom 48%',scrub:.5}});
+      });
       const timeline=document.querySelector('.mr-timeline');
       if(timeline){
         gsap.fromTo('.mr-timeline-fill',{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:timeline,start:'top 65%',end:'bottom 65%',scrub:.6}});
         timeline.querySelectorAll('.mr-step').forEach(step=>{
           const icon=step.querySelector('.mr-step-icon'),card=step.querySelector('.mr-step-card');
           const tl=gsap.timeline({scrollTrigger:{trigger:step,start:'top 80%',end:'top 42%',scrub:.5,onUpdate:self=>step.dataset.active=self.progress>.5?'true':'false'}});
-          tl.fromTo(icon,{backgroundColor:'#dedfd8',borderColor:'#d4d6cf','--halo':0},{backgroundColor:'#969c80',borderColor:'#969c80','--halo':1,duration:1},0)
+          tl.fromTo(icon.querySelector('img'),{filter:'grayscale(1) brightness(0) invert(.78)'},{filter:'grayscale(1) brightness(0) invert(1)',duration:1},0);
+          tl.fromTo(icon,{backgroundColor:'#858b83',borderColor:'#858b83','--halo':0},{backgroundColor:'#6c765f',borderColor:'#6c765f','--halo':1,duration:1},0)
             .fromTo(card,{backgroundColor:'#f1f0ed',borderColor:'#e3e3dd',y:16},{backgroundColor:'#edf0e5',borderColor:'#a5ad92',y:0,duration:1},0)
             .fromTo(card.querySelector('.mr-script'),{color:'#7f8278'},{color:'#69735b',duration:1},0);
         });

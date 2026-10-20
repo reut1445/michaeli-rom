@@ -96,3 +96,16 @@ html[lang=en] .mr-site .mr-language{direction:ltr;gap:5px;padding-inline:9px;whi
 .mr-site .mr-hero-video.is-playing{opacity:1}
 @media(max-width:767px){.mr-site .mr-hero-video{object-position:83.4% center}}
 @media(prefers-reduced-motion:reduce){.mr-site .mr-hero-video{display:none}}
+/* October 20: readable spacing, persistent icons and single-line actions. */
+.mr-site .mr-about-copy .mr-script{padding-bottom:12px;line-height:1.15}
+.mr-site .mr-about-divider:before{transform:scaleX(var(--line-scale,1));transform-origin:center}
+.mr-site .mr-step-icon .mr-image{width:64px;max-width:72%}
+.mr-site .mr-step-icon img{width:100%;height:64px;max-height:none;object-fit:contain;filter:grayscale(1) brightness(0) invert(.78)}
+.mr-site .mr-step:nth-child(n) .mr-step-icon{background:#858b83}
+.mr-site .mr-step[data-active=true] .mr-step-icon img{filter:grayscale(1) brightness(0) invert(1)}
+.mr-site .mr-button,.mr-site .mr-cta{width:max-content;min-width:0;max-width:100%;height:auto;min-height:46px;aspect-ratio:auto}
+.mr-site .mr-button a,.mr-site .mr-cta a,.mr-site .mr-form button{white-space:nowrap;text-wrap:nowrap;line-height:1.35;gap:8px}
+.mr-site .mr-button a,.mr-site .mr-cta a{padding:12px 26px}
+.mr-site .mr-button br,.mr-site .mr-cta br{display:none}
+.mr-site .mr-form input[type=tel]{text-align:right;direction:ltr}
+@media(max-width:767px){.mr-site .mr-step-icon .mr-image{width:46px;max-width:72%}.mr-site .mr-step-icon img{height:46px}.mr-site .mr-button a,.mr-site .mr-cta a{padding-inline:16px}.mr-site .mr-about-copy .mr-script{padding-bottom:10px}}
