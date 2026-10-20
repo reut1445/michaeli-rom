@@ -109,3 +109,25 @@ html[lang=en] .mr-site .mr-language{direction:ltr;gap:5px;padding-inline:9px;whi
 .mr-site .mr-button br,.mr-site .mr-cta br{display:none}
 .mr-site .mr-form input[type=tel]{text-align:right;direction:ltr}
 @media(max-width:767px){.mr-site .mr-step-icon .mr-image{width:46px;max-width:72%}.mr-site .mr-step-icon img{height:46px}.mr-site .mr-button a,.mr-site .mr-cta a{padding-inline:16px}.mr-site .mr-about-copy .mr-script{padding-bottom:10px}}
+/* Compact, readable six-card overview. */
+.mr-site .mr-value-icon .mr-icon-disc{opacity:1;filter:none}
+@media(min-width:768px){
+.mr-site .mr-values{min-height:0;padding:36px 28px 44px;gap:22px}
+.mr-site .mr-values>.mr-olive{width:145px}
+.mr-site .mr-values .mr-section-title{font-size:34px;line-height:1.15}
+.mr-site .mr-values-grid,html[lang=en] .mr-site .mr-values-grid{width:100%;max-width:1080px;margin-inline:auto;gap:20px;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+.mr-site .mr-value,html[lang=en] .mr-site .mr-value{min-height:0;padding:20px 22px;gap:10px;border-radius:20px;justify-content:flex-start;box-shadow:0 3px 7px #0000000b}
+.mr-site .mr-value-title,html[lang=en] .mr-site .mr-value-title{font-size:21px;line-height:1.2}
+.mr-site .mr-value .mr-body,html[lang=en] .mr-site .mr-value .mr-body{font-size:18px;line-height:1.35}
+.mr-site .mr-value-icon{order:0;width:71px;height:70px;transform:scale(.8);margin:-7px 0 -5px}
+.mr-site .mr-values>.mr-text-link{margin-top:0;font-size:18px}
+}
+@media(min-width:768px) and (max-height:800px){
+.mr-site .mr-values{padding-block:22px;gap:15px}
+.mr-site .mr-values>.mr-olive{width:110px}
+.mr-site .mr-value,html[lang=en] .mr-site .mr-value{padding:14px 18px;gap:7px}
+.mr-site .mr-value .mr-body,html[lang=en] .mr-site .mr-value .mr-body{font-size:17px;line-height:1.25}
+.mr-site .mr-value-title,html[lang=en] .mr-site .mr-value-title{font-size:19px}
+.mr-site .mr-value-icon{transform:scale(.7);margin:-10px 0 -8px}
+}
+@media(max-width:767px){.mr-site .mr-value-icon{transform:scale(.85);margin:-5px 0 0}}
